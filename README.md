@@ -6,7 +6,8 @@ Welcome to the Cinema Booking System! This project allows users to explore, book
 GA Cinema is website show many movies to guests and users , user can booking the tickets fot each movie 
 ## Features
 
-- **User Authentication**: 
+- **User Authentication**:
+  - **Sign Up**: Users can create an account to start their journey.
   - **Sign In**: Users can create an account and log in to manage their bookings.
   - **Sign Out**: Users can securely log out from their account.
 
