@@ -1,0 +1,34 @@
+{
+  "name": "ga-cinema",
+  "version": "1.0.0",
+  "description": "Welcome to the Cinema Booking System! This project allows users to explore, book, and manage their movie-watching experience seamlessly. Users can sign in to access the full functionality, including booking tickets for their favorite films. GA Cinema is website show many movies to guests and users , user can booking the tickets fot each movie  ## Features",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fat7y-1/GA-Cinema.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/fat7y-1/GA-Cinema/issues"
+  },
+  "homepage": "https://github.com/fat7y-1/GA-Cinema#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^9.2.3",
+    "morgan": "^1.10.1"
+  }
+}
