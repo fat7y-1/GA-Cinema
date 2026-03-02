@@ -39,6 +39,9 @@ app.use(
   })
 )
 
+const authRouter = require("./routes/authRouter.js")
+app.use("/auth", authRouter)
+
 app.listen(PORT, () => {
   console.log(`🎬 Mongoose Server is on Port ${PORT}......`)
 })
