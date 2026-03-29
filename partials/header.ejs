@@ -1,0 +1,17 @@
+<a href="/" class="nav-logo">🎬 GA CINEMA</a>
+
+    <div class="nav-links">
+        <a href="/" class="nav-item">Home</a>
+
+        <% if(!user){ %>
+            <a href="/auth/sign-in" class="nav-item">Sign In</a>
+            <a href="/auth/sign-up" class="nav-item btn-outline-sm">Sign Up</a>
+
+        <% } else { %>
+            <% if(user.email === "admin@email.com"){ %>
+                <a href="/auth/<%= user._id %>/admin" class="nav-item" style="color: #00d4ff;">Admin Dashboard</a>
+            <% } %>
+
+            <a href="<%= `/auth/${user._id}/update-password` %>" class="nav-item">Settings</a>
+            <a href="/auth/sign-out" class="nav-item sign-out-link">Sign Out</a>
+        <% } %>
