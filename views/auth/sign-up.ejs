@@ -1,17 +1,202 @@
-<%- include('../partials/header.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GA Cinema | Join the Family</title>
+    <style>
+      :root {
+        --primary-gold: #f5c518;
+        --bg-dark: #121212;
+        --card-bg: #1e1e1e;
+        --text-light: #ffffff;
+        --text-gray: #b3b3b3;
+      }
 
-<h2>Sign Up</h2>
-<form action="/auth/sign-up" method="POST">
-  <input type="text" name="first" placeholder="First Name" required />
-  <input type="text" name="last" placeholder="Last Name" required />
-  <input type="email" name="email" placeholder="Email" required />
-  <input type="text" name="picture" placeholder="Profile Picture URL" />
-  <input type="password" name="password" placeholder="Password" required />
-  <input
-    type="password"
-    name="confirmPassword"
-    placeholder="Confirm Password"
-    required
-  />
-  <button type="submit">Register</button>
-</form>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        /* Cinematic background to match Sign In */
+        background:
+          linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9)),
+          url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070");
+        background-size: cover;
+        padding: 20px;
+      }
+
+      .signup-container {
+        background: var(--card-bg);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        max-width: 500px;
+        border-top: 5px solid var(--primary-gold);
+      }
+
+      .header-text {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: var(--primary-gold);
+        font-size: 1.8rem;
+        margin: 0 0 10px 0;
+      }
+
+      h2 {
+        font-size: 0.9rem;
+        color: var(--text-gray);
+        font-weight: normal;
+        line-height: 1.4;
+      }
+
+      form {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns for name fields */
+        gap: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* Span email and password fields across both columns */
+      .full-width {
+        grid-column: span 2;
+      }
+
+      label {
+        font-size: 0.8rem;
+        color: var(--text-gray);
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      input {
+        padding: 12px;
+        background: #2a2a2a;
+        border: 1px solid #333;
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
+        transition: 0.3s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--primary-gold);
+        box-shadow: 0 0 10px rgba(245, 197, 24, 0.2);
+      }
+
+      button {
+        grid-column: span 2;
+        background: var(--primary-gold);
+        color: black;
+        border: none;
+        padding: 15px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #e2b616;
+        transform: translateY(-2px);
+      }
+
+      .footer-links {
+        grid-column: span 2;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: var(--text-gray);
+      }
+
+      .footer-links a {
+        color: var(--primary-gold);
+        text-decoration: none;
+      }
+
+      @media (max-width: 480px) {
+        form {
+          grid-template-columns: 1fr;
+        }
+        .full-width {
+          grid-column: span 1;
+        }
+        button {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-container">
+      <div class="header-text">
+        <h1>Join GA Cinema</h1>
+        <h2>Be part of the family and catch the latest premieres.</h2>
+      </div>
+
+      <form action="/auth/sign-up" method="POST">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" name="first" placeholder="John" required />
+        </div>
+
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" name="last" placeholder="Doe" />
+        </div>
+
+        <div class="form-group full-width">
+          <label>Email Address</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="john@example.com"
+            required
+          />
+        </div>
+
+        <div class="form-group full-width">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <div class="form-group full-width">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <button type="submit">Create Account</button>
+
+        <div class="footer-links">
+          Already a member? <a href="/auth/sign-in">Sign In</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,74 @@
-<a href="/" class="nav-logo">🎬 GA CINEMA</a>
+<style>
+    /* Navbar Container */
+    .navbar {
+        background-color: rgba(18, 18, 18, 0.95); /* Matches your dark theme */
+        backdrop-filter: blur(10px); /* Glass effect */
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid #333;
+    }
+
+    /* Logo Style */
+    .nav-logo {
+        color: #f5c518; /* Gold */
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        letter-spacing: 1px;
+    }
+
+    /* Links Group */
+    .nav-links {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    /* Individual Link Style */
+    .nav-item {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .nav-item:hover {
+        color: #f5c518; /* Glow gold on hover */
+    }
+
+    /* Special Styling for Action Buttons */
+    .btn-outline-sm {
+        border: 1px solid #f5c518;
+        padding: 6px 12px;
+        border-radius: 4px;
+        color: #f5c518;
+    }
+
+    .btn-outline-sm:hover {
+        background: #f5c518;
+        color: #000;
+    }
+
+    .sign-out-link {
+        color: #ff4d4d; /* Red for sign out */
+        font-size: 0.85rem;
+        opacity: 0.8;
+    }
+
+    .sign-out-link:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+</style>
+
+<nav class="navbar">
+    <a href="/" class="nav-logo">🎬 GA CINEMA</a>
 
     <div class="nav-links">
         <a href="/" class="nav-item">Home</a>
@@ -15,3 +85,5 @@
             <a href="<%= `/auth/${user._id}/update-password` %>" class="nav-item">Settings</a>
             <a href="/auth/sign-out" class="nav-item sign-out-link">Sign Out</a>
         <% } %>
+    </div>
+</nav>

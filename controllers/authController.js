@@ -28,7 +28,7 @@ const registerUser = async (req, res) => {
 
     const user = await User.create(req.body)
 
-    res.send(`thanks ${user.first}`)
+    res.render("auth/thanks.ejs")
   } catch (error) {
     es.status(404).json({
       message: "⚠️ A error has occurred showing the Sign Up Page!",
@@ -117,7 +117,7 @@ const updatePassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.newPassword, 12)
     user.password = hashedPassword
     await user.save()
-    res.send("Successful update")
+    res.render("auth/confirm.ejs")
   } catch (error) {
     console.error("⚠️ An error has occurred registering a user!", error.message)
   }

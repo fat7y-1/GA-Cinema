@@ -11,5 +11,6 @@ router.get("/sign-out", authController.signOut)
 router.put("/:id", authController.updatePassword)
 router.get("/:id/update-password", authController.showUpdatePage)
 router.get("/:id/admin", authController.showAdminPage)
-
+//router.get("/")
 module.exports = router
+
