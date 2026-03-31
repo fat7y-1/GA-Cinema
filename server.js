@@ -13,13 +13,18 @@ const { MongoStore } = require("connect-mongo")
 const path = require("path")
 
 // middleware
+const middleware = require("./middleware/index")
 
 // express library
 const app = express()
 
 //Router
+const authRouter = require("./routes/authRouter")
+
+const adminRouter = require("./routes/adminRouter")
 
 const db = require("./db")
+const Movie = require("./models/Movie")
 
 const PORT = process.env.PORT ? process.env.PORT : 3000
 
@@ -38,6 +43,16 @@ app.use(
     }),
   })
 )
+app.use(middleware.passUserToView)
+app.use("/auth", authRouter)
+app.use("/admin", adminRouter)
+
+app.get("/", async (req, res) => {
+  try {
+    const movies = await Movie.find({})
+    res.render("./index.ejs", { movies })
+  } catch (error) {}
+})
 
 app.listen(PORT, () => {
   console.log(`🎬 Mongoose Server is on Port ${PORT}......`)

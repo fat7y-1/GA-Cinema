@@ -6,6 +6,8 @@ const movieSchema = new mongoose.Schema(
     description: { type: String, required: true },
     language: { type: String, require: true },
     picture: { type: String, require: true },
+    trailVideo: { type: String, require: true },
+    Tickets: { type: Number, require: true },
     admin: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",

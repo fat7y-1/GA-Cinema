@@ -2,60 +2,98 @@ const bcrypt = require("bcrypt")
 
 const User = require("../models/User.js")
 
+const showSignUpPage = (req, res) => {
+  try {
+    res.render("auth/sign-up.ejs")
+  } catch (error) {
+    res.status(404).json({
+      message: "⚠️ A error has occurred showing the Sign Up Page!",
+      error: error.message,
+    })
+  }
+}
 const registerUser = async (req, res) => {
   try {
-    const userInDatabase = await User.exists({ email: req.body.email })
-    if (userInDatabase) {
-      return res.send("❌ Username already taken!")
+    const emailInDataBase = await User.exists({ email: req.body.email })
+
+    if (emailInDataBase) {
+      return res.send("❌ Email is already taken")
     }
     if (req.body.password !== req.body.confirmPassword) {
-      return res.send("❌ Password and Confirm Password must match")
+      return res.send("❌ Password and Confirm Password must match!")
     }
+
     const hashedPassword = await bcrypt.hash(req.body.password, 12)
-    await User.create({
-      email: req.body.email,
-      password: hashedPassword,
-      first: req.body.first,
-      last: req.body.last,
-      picture: req.body.picture,
-    })
-    res.render("./auth/thanks.ejs")
+    req.body.password = hashedPassword
+
+    const user = await User.create(req.body)
+
+    res.render("auth/thanks.ejs")
   } catch (error) {
-    console.error("⚠️ An error has occurred registering a user!", error.message)
+    es.status(404).json({
+      message: "⚠️ A error has occurred showing the Sign Up Page!",
+      error: error.message,
+    })
+  }
+}
+
+const showSignInPage = async (req, res) => {
+  try {
+    res.render("./auth/sign-in.ejs")
+  } catch (error) {
+    res.status(404).json({
+      message: "⚠️ A error has occurred showing the Sign In Page!",
+      error: error.message,
+    })
   }
 }
 
 const signInUser = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email })
-    if (!user) {
-      return res.send(
-        "❌ No user has been registered with that email. Please sign up!"
-      )
+    const userInDatabase = await User.findOne({ email: req.body.email })
+    if (!userInDatabase) {
+      return res.send("❌ Login failed. Please try again.")
     }
-    const validPassword = await bcrypt.compare(req.body.password, user.password)
+
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      userInDatabase.password
+    )
     if (!validPassword) {
-      return res.send("❌ Incorrect password! Please try again.")
+      return res.send("❌ Login failed. Please try again.")
     }
     req.session.user = {
-      email: user.email,
-      _id: user._id,
+      first: userInDatabase.first,
+      email: userInDatabase.email,
+      _id: userInDatabase._id,
     }
+
     req.session.save(() => {
-      res.redirect(`/users/${user._id}`)
+      res.redirect("/")
     })
   } catch (error) {
-    console.error("⚠️ An error has occurred signing in a user!", error.message)
+    res.status(500).json({
+      message: "⚠️ An error has occurred signing in a user!",
+      error: error.message,
+    })
   }
 }
 
-const signOutUser = (req, res) => {
+const signOut = async (req, res) => {
   try {
     req.session.destroy(() => {
       res.redirect("/")
     })
   } catch (error) {
-    console.error("⚠️ An error has occurred signing out a user!", error.message)
+    console.error("⚠️ An error has occurred registering a user!", error.message)
+  }
+}
+
+const showUpdatePage = async (req, res) => {
+  try {
+    res.render("./auth/update-password.ejs")
+  } catch (error) {
+    console.error("⚠️ An error has occurred not find the page!", error.message)
   }
 }
 
@@ -63,34 +101,43 @@ const updatePassword = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
-      return res.render("./auth/confirm.ejs", { user })
+      return res.send("❌ No user with that ID exist")
     }
+
     const validPassword = await bcrypt.compare(
       req.body.oldPassword,
       user.password
     )
     if (!validPassword) {
-      return res.render("./auth/confirm.ejs", { user })
+      return res.send("❌ Your old password not correct")
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
-      return res.render("./auth/confirm.ejs", { user })
+      return res.send("❌ password not same")
     }
     const hashedPassword = await bcrypt.hash(req.body.newPassword, 12)
     user.password = hashedPassword
-
     await user.save()
-    res.render("./auth/confirm.ejs", { user })
+    res.render("auth/confirm.ejs")
   } catch (error) {
-    console.error(
-      "⚠️ An error has occurred updating a user's password!",
-      error.message
-    )
+    console.error("⚠️ An error has occurred registering a user!", error.message)
+  }
+}
+
+const showAdminPage = async (req, res) => {
+  try {
+    res.render("./admin/admin.ejs")
+  } catch (error) {
+    console.error("⚠️ An error has occurred login a admin!", error.message)
   }
 }
 
 module.exports = {
+  showSignUpPage,
   registerUser,
+  showSignInPage,
   signInUser,
-  signOutUser,
+  signOut,
   updatePassword,
+  showUpdatePage,
+  showAdminPage,
 }
