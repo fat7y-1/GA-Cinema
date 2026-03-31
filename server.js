@@ -1,8 +1,12 @@
 require("dotenv").config({ quiet: true })
+
 const express = require("express")
 const methodOverride = require("method-override")
 const morgan = require("morgan")
 const session = require("express-session")
+
+// const dns = require("dns")
+// dns.setServers(["8.8.8.8", "1.1.1.1"])
 
 const { MongoStore } = require("connect-mongo")
 
@@ -14,6 +18,7 @@ const path = require("path")
 const app = express()
 
 //Router
+const authRouter = require("./routes/authRouter")
 
 const db = require("./db")
 
@@ -34,6 +39,12 @@ app.use(
     }),
   })
 )
+
+app.use("/auth", authRouter)
+
+app.get("/", (req, res) => {
+  res.render("./index.ejs")
+})
 
 app.listen(PORT, () => {
   console.log(`🎬 Mongoose Server is on Port ${PORT}......`)
