@@ -49,8 +49,8 @@ app.use("/admin", adminRouter)
 
 app.get("/", async (req, res) => {
   try {
-    //const movies = await Movie.find({})
-    res.render("./index.ejs")
+    const movies = await Movie.find({})
+    res.render("./index.ejs", { movies })
   } catch (error) {}
 })
 
