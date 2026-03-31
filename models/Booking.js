@@ -6,7 +6,7 @@ const bookingSchema = new mongoose.Schema(
     description: { type: String, required: true },
     language: { type: String, require: true },
     picture: { type: String, require: true },
-    User: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

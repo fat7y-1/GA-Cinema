@@ -5,8 +5,8 @@ const methodOverride = require("method-override")
 const morgan = require("morgan")
 const session = require("express-session")
 
-const dns = require("dns")
-dns.setServers(["8.8.8.8", "1.1.1.1"])
+// const dns = require("dns")
+// dns.setServers(["8.8.8.8", "1.1.1.1"])
 
 const { MongoStore } = require("connect-mongo")
 
@@ -52,6 +52,12 @@ app.get("/", async (req, res) => {
     const movies = await Movie.find({})
     res.render("./index.ejs", { movies })
   } catch (error) {}
+})
+
+app.use("/auth", authRouter)
+
+app.get("/", (req, res) => {
+  res.render("./index.ejs")
 })
 
 app.listen(PORT, () => {
