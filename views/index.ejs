@@ -1,12 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GA Cinema</title>
-  </head>
-  <body>
-    <a href="/auth/sign-in.ejs">sign in</a>
-    <a href="/auth/sign-up.ejs">sign up</a>
-  </body>
+    <title>GA Cinema | Home</title>
+    <style>
+        :root {
+            --primary-gold: #f5c518; /* IMDb Gold */
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #ffffff;
+            --text-gray: #b3b3b3;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styling */
+        .welcome-section {
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 3px solid var(--primary-gold);
+        }
+
+        .user-nav {
+            margin-top: 15px;
+            font-size: 25px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn-gold { background: var(--primary-gold); color: black; }
+        .btn-gold:hover { background: #e2b616; transform: scale(1.05); }
+
+        .btn-outline { border: 1px solid white; color: white; }
+        .btn-outline:hover { background: white; color: black; }
+
+        /* Movie Grid */
+        .movie-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .movie-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .movie-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .movie-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+            color: var(--primary-gold);
+        }
+
+        .movie-card p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+
+        .tickets-left {
+            font-weight: bold;
+            color: #2ecc71; /* Green for available */
+            margin-top: auto;
+            padding-bottom: 15px;
+        }
+
+        .view-link {
+            text-align: center;
+            background: var(--primary-gold);
+            color: black;
+            text-decoration: none;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        h1{
+          font-size: 70px;
+        }
+        h3{
+          font-size: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <%- include("../partials/header.ejs") %>
+
+    <header class="welcome-section">
+        <h1>GA CINEMA</h1>
+        <% if(user){ %>
+            <h3>Welcome back <%= user.first %></h3>
+            <div class="user-nav">
+                <a href="/user/userPage" class="btn btn-gold">My Bookings</a>
+                <% if(user.email === "admin@email.com"){ %>
+                    <a href="/auth/<%= user._id %>/admin" class="btn btn-outline">Admin Panel</a>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="user-nav">
+                <a href="/auth/sign-in" class="btn btn-gold">Sign In to Book Tickets</a>
+            </div>
+        <% } %>
+    </header>
+
+    <main class="movie-container">
+        <% movies.forEach((movie) => { %>
+            <div class="movie-card">
+                <img src="<%= movie.picture %>" alt="<%= movie.name %>">
+                <div class="movie-content">
+                    <h3><%= movie.name %></h3>
+                    <p><strong>Language:</strong> <%= movie.language %></p>
+                    <p><%= movie.description.substring(0, 100) %>...</p>
+                    <p class="tickets-left">🎟️ <%= movie.Tickets %> Tickets Available</p>
+                    <a href="/admin/movieDescription/<%= movie._id %>" class="view-link">View Details</a>
+                </div>
+            </div>
+        <% }) %>
+    </main>
+
+</body>
+>>>>>>> a68800f206350fe08e99093b76bbd2b08a2e4b8c
 </html>
