@@ -14,14 +14,14 @@ const path = require("path")
 
 // middleware
 const middleware = require("./middleware/index")
-
 // express library
 const app = express()
 
 //Router
 const authRouter = require("./routes/authRouter")
-
 const adminRouter = require("./routes/adminRouter")
+const userBooking = require("./routes/userRouter")
+const seatRouter = require("./routes/seatRouter")
 
 const db = require("./db")
 const Movie = require("./models/Movie")
@@ -44,8 +44,11 @@ app.use(
   })
 )
 app.use(middleware.passUserToView)
+
 app.use("/auth", authRouter)
 app.use("/admin", adminRouter)
+app.use("/user", userBooking)
+app.use("/seat", seatRouter)
 
 app.get("/", async (req, res) => {
   try {

@@ -125,7 +125,7 @@
   </style>
 </head>
 <body>
-  <%- include("../partials/header.ejs")%>
+    <%- include("../partials/header.ejs") %>
 
   <div class="booking-wrapper">
     <h2>Choose Your Seats</h2>
@@ -163,7 +163,7 @@
      const done = document.getElementById("container").dataset.done
 
      const nameUser= document.getElementById("container").dataset.user_seat
-                          // JSON.parse  String to Object
+
     const bookedSeatInData = JSON.parse(document.getElementById("container").dataset.booked_seat)
     const takenSeats = bookedSeatInData.movieId.seats
 
@@ -212,13 +212,13 @@
     })
 
 
-   // Get the booking ID from your data attributes
+
 const bookingId = bookedSeatInData._id
 
 const response = await fetch(`/seat/bookedSeat/${movieId}/${bookingId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    //. JSON.stringify.  object to String
+
     body: JSON.stringify({ seats: finishSelected })
 })
     if (response.ok) {
