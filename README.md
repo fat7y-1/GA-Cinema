@@ -30,5 +30,17 @@ GA Cinema is website show many movies to guests and users , user can booking the
 
 
 - **Booking System**:
+  ![img](./img/booking.png)
+
   - Only accessible to signed-in users.
   - Provides an easy and straightforward process to reserve tickets.
+  ![img](./img/booking2.png)
+  ![img](./img/booking3.png)
+  ![img](./img/booking4.png)
+
+
+
+
+
+
+
