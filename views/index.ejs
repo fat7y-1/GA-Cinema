@@ -129,7 +129,7 @@
     </style>
 </head>
 <body>
-    <%- include("../partials/header.ejs") %>
+    <%- include("./partials/header.ejs") %>
 
     <header class="welcome-section">
         <h1>GA CINEMA</h1>
@@ -157,12 +157,12 @@
                     <p><strong>Language:</strong> <%= movie.language %></p>
                     <p><%= movie.description.substring(0, 100) %>...</p>
                     <p class="tickets-left">🎟️ <%= movie.Tickets %> Tickets Available</p>
-                    <a href="/admin/movieDescription/<%= movie._id %>" class="view-link">View Details</a>
+                    <a href="/user/movieDescription/<%= movie._id %>" class="view-link">View Details</a>
                 </div>
             </div>
         <% }) %>
     </main>
 
 </body>
->>>>>>> a68800f206350fe08e99093b76bbd2b08a2e4b8c
+
 </html>

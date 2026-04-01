@@ -8,9 +8,10 @@ const movieSchema = new mongoose.Schema(
     picture: { type: String, require: true },
     trailVideo: { type: String, require: true },
     Tickets: { type: Number, require: true },
+    seats: [],
     admin: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin",
+      ref: "User",
       required: true,
     },
   },

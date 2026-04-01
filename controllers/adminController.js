@@ -74,18 +74,6 @@ const deleteMovie = async (req, res) => {
   }
 }
 
-const showMovieDesc = async (req, res) => {
-  try {
-    const descMovie = await Movie.findById(req.params.id)
-
-    res.render("../views/movieDescription.ejs", { descMovie })
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "⚠️ Error getting page!", error: error.message })
-  }
-}
-
 module.exports = {
   allMovies,
   showNewMoviePage,
@@ -93,5 +81,4 @@ module.exports = {
   deleteMovie,
   showUpdateMovie,
   updateMovie,
-  showMovieDesc,
 }
