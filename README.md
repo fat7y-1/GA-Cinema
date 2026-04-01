@@ -2,7 +2,7 @@
 
 ## Overview
 
-**GA-Cinema** is a full-featured Cinema Booking System designed to provide users with a seamless and modern movie experience. The platform allows both guests and registered users to explore, select, and book tickets for movies online without the need to visit a cinema in person.
+**GA-Cinema** is a full-featured Cinema Booking System designed to provide users with a seamless and modern movie experience. The platform allows registered users to explore, select, and book tickets for movies online without the need to visit a cinema in person.
 
 Guests can browse movies, see basic information, and view showtimes, while registered users can access additional features such as booking management, personal booking history, and secure account management. The system emphasizes real-time seat availability, smooth booking processes, and a clean user interface to ensure an enjoyable experience for all users.
 
@@ -28,7 +28,7 @@ GA-Cinema provides secure authentication features for registered users:
 
 The home page serves as the main hub for users and visitors:
 
-- Shows a curated list of movies currently available in the cinema.
+- Shows list of movies currently available in the cinema.
 - Includes movie posters, brief descriptions, and showtimes for quick browsing.
 - Guests can explore without creating an account, while registered users can immediately proceed to detailed pages or bookings.
   ![Home Page](./img/home-page.png)
@@ -39,8 +39,8 @@ The home page serves as the main hub for users and visitors:
 
 Each movie has a detailed page providing complete information:
 
-- **Synopsis**: Brief description of the movie plot and storyline.
-- **Genre & Duration**: Allows users to select movies according to their preferences.
+- **Summary of movie**: Brief description of the movie plot and storyline.
+- **Details of Booking**: Allows users to select movies according to their preferences.
 - **Available Tickets**: Displays the number of tickets remaining to help users make informed booking decisions.
 - **Booking Option**: Logged-in users can select showtimes and proceed to booking.
   ![Movie Details](./img/Detalis.png)
