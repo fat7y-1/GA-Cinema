@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+  </head>
+  <body>
+   <style>
+    :root {
+      --primary-gold: #f5c518;
+      --bg-dark: #121212;
+      --card-bg: #1e1e1e;
+      --seat-free: #444;
+      --seat-selected: #f5c518;
+      --seat-taken: #e74c3c;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-dark);
+      color: white;
+      margin: 0;
+      text-align: center;
+    }
+
+    .booking-wrapper {
+      max-width: 800px;
+      margin: 40px auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Screen Visual */
+    .screen {
+      width: 70%;
+      height: 8px;
+      background: #fff;
+      margin: 20px auto 50px;
+      border-radius: 50%;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Grid Layout */
+    #container {
+      display: grid;
+      grid-template-columns: repeat(9, 45px);
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    /* Seat Styling */
+    .seat {
+      width: 40px;
+      height: 35px;
+      background: var(--seat-free);
+      border-radius: 6px 6px 12px 12px; /* Chair shape */
+      cursor: pointer;
+      line-height: 35px;
+      font-size: 11px;
+      color: #999;
+      transition: all 0.2s;
+    }
+
+    .seat:hover:not(.redSelect) {
+      background: #666;
+      transform: scale(1.1);
+    }
+
+    .blueSelect {
+      background: var(--seat-selected) !important;
+      color: #000 !important;
+      box-shadow: 0 0 15px rgba(245, 197, 24, 0.5);
+      font-weight: bold;
+    }
+
+    .redSelect {
+      background: var(--seat-taken) !important;
+      cursor: not-allowed;
+      opacity: 0.3;
+      color: transparent;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; }
+    .box { width: 15px; height: 15px; border-radius: 3px; }
+
+    /* Footer / Button Area */
+    .footer-info {
+      border-top: 1px solid #333;
+      padding-top: 25px;
+    }
+
+    #save {
+      background: var(--primary-gold);
+      color: black;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #save:hover { background: #e2b616; transform: translateY(-2px); }
+
+    .counter {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      color: var(--text-gray);
+    }
+    #remaining { color: var(--primary-gold); font-weight: bold; }
+  </style>
+</head>
+<body>
+  <%- include("../partials/header.ejs")%>
+
+  <div class="booking-wrapper">
+    <h2>Choose Your Seats</h2>
+    <p style="color: #888;">Movie : <%= bookedSeat.movieId.name %></p>
+
+    <div class="screen"></div>
+    <p style="font-size: 0.7rem; color: #555; margin-bottom: 20px; letter-spacing: 3px;">SCREEN</p>
+
+    <div id="container"
+         data-ticket_limit="<%= bookedSeat.userTicket %>"
+         data-booked_seat="<%= JSON.stringify(bookedSeat) %>"
+         data-movie_id="<%= bookedSeat.movieId._id %>">
+
+
+      <% for(let i=0 ; i < 72 ; i++){ %>
+        <div class="seat" data-seat="<%= i %>"><%= i+1 %></div>
+      <% } %>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="box" style="background:#444"></div> Available</div>
+      <div class="legend-item"><div class="box" style="background:var(--primary-gold)"></div> Selected</div>
+      <div class="legend-item"><div class="box" style="background:var(--seat-taken)"></div> Sold</div>
+    </div>
+
+    <div class="footer-info">
+
+      <button id="save">Confirm Selection</button>
+    </div>
+  </div>
+
+    <script>
+     const ticketLimit = parseInt(document.getElementById("container").dataset.ticket_limit)
+     const movieId = document.getElementById("container").dataset.movie_id
+     const done = document.getElementById("container").dataset.done
+
+     const nameUser= document.getElementById("container").dataset.user_seat
+                          // JSON.parse  String to Object
+    const bookedSeatInData = JSON.parse(document.getElementById("container").dataset.booked_seat)
+    const takenSeats = bookedSeatInData.movieId.seats
+
+    const seats = document.querySelectorAll(".seat")
+    let userSelectedCount = 0
+
+    const finishBook = document.querySelector("#save")
+
+    takenSeats.forEach(index => {
+      const seat = document.querySelector(`.seat[data-seat="${index}"]`)
+      if(seat){
+        seat.classList.add("redSelect")
+      }
+    })
+
+    seats.forEach(seat =>{
+      seat.addEventListener("click",()=>{
+        if(seat.classList.contains("redSelect")){
+          return
+        }
+        if(seat.classList.contains("blueSelect")){
+          seat.classList.remove("blueSelect")
+          userSelectedCount --
+        }
+        else{
+          if( userSelectedCount < ticketLimit){
+            seat.classList.add("blueSelect")
+            userSelectedCount++
+          }
+          else{
+            alert(`you can select only ${ticketLimit} seats`)
+          }
+        }
+      })
+    })
+
+    finishBook.addEventListener("click", async ()=>{
+      if(userSelectedCount<ticketLimit){
+        return alert(`please select ${ticketLimit} seats`)
+
+      }
+
+    const finishSelected = []
+    document.querySelectorAll(".blueSelect").forEach(sel =>{
+      finishSelected.push(parseInt(sel.dataset.seat))
+    })
+
+
+   // Get the booking ID from your data attributes
+const bookingId = bookedSeatInData._id
+
+const response = await fetch(`/seat/bookedSeat/${movieId}/${bookingId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    //. JSON.stringify.  object to String
+    body: JSON.stringify({ seats: finishSelected })
+})
+    if (response.ok) {
+    alert("Seats saved successfully!")
+    window.location.href="/user/userPage"
+    }else{
+       alert("Error saving seats.")
+    }
+
+  })
+
+
+    </script>
+  </body>
+</html>
