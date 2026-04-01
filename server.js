@@ -5,8 +5,8 @@ const methodOverride = require("method-override")
 const morgan = require("morgan")
 const session = require("express-session")
 
-// const dns = require("dns")
-// dns.setServers(["8.8.8.8", "1.1.1.1"])
+const dns = require("dns")
+dns.setServers(["8.8.8.8", "1.1.1.1"])
 
 const { MongoStore } = require("connect-mongo")
 
