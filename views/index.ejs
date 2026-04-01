@@ -135,7 +135,7 @@
         <% if(user){ %>
             <h3>Welcome back <%= user.first %></h3>
             <div class="user-nav">
-                <a href="/user/userPage" class="btn btn-gold">My Bookings</a>
+                <a href="" class="btn btn-gold">My Bookings</a>
                 <% if(user.email === "admin@email.com"){ %>
                     <a href="/auth/<%= user._id %>/admin" class="btn btn-outline">Admin Panel</a>
                 <% } %>

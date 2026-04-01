@@ -1,58 +1,70 @@
+<!-- views/successPage/signupSuccess.ejs -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thanks</title>
-
+    <title>GA Cinema | Success</title>
     <style>
+      :root {
+        --primary-gold: #f5c518;
+        --bg-dark: #121212;
+        --card-bg: #1e1e1e;
+        --text-light: #ffffff;
+        --text-gray: #b3b3b3;
+      }
+
       body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-light);
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
+        height: 100vh;
       }
 
       .card {
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        background-color: var(--card-bg);
+        padding: 40px 50px;
+        border-radius: 15px;
         text-align: center;
-        width: 320px;
-      }
-
-      .card h2 {
-        margin-bottom: 10px;
-        color: #333;
-      }
-
-      .card p {
-        color: #777;
-        margin-bottom: 25px;
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 12px 20px;
-        background: #667eea;
-        color: white;
-        text-decoration: none;
-        border-radius: 10px;
-        transition: 0.3s;
-      }
-
-      .btn:hover {
-        background: #5a67d8;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        max-width: 400px;
       }
 
       .icon {
         font-size: 50px;
         margin-bottom: 15px;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+        color: var(--primary-gold);
+        font-size: 2rem;
+      }
+
+      p {
+        color: var(--text-gray);
+        margin-bottom: 25px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: var(--primary-gold);
+        color: black;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #e2b616;
+        transform: scale(1.05);
       }
     </style>
   </head>
@@ -62,8 +74,7 @@
       <div class="icon">🎉</div>
       <h2>Thanks for signing up!</h2>
       <p>Your account has been created successfully.</p>
-
-<a href="/auth/sign-in" class="btn">Go to Login</a>
+      <a href="/auth/sign-in" class="btn">Go to Login</a>
     </div>
   </body>
 </html>
