@@ -8,10 +8,7 @@ GA Cinema is website show many movies to guests and users , user can booking the
 
 - **User Authentication**:
   - **Sign Up**: Users can create an account to start their journey.
-  - 
   - **Sign In**: Users can create an account and log in to manage their bookings.
-  -   - ![img](./img/sign-in-page.png)
-
   - **Sign Out**: Users can securely log out from their account.
 
 - **Home Page**:
