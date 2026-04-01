@@ -35,8 +35,53 @@ GA Cinema is website show many movies to guests and users , user can booking the
   - Only accessible to signed-in users.
   - Provides an easy and straightforward process to reserve tickets.
   ![img](./img/booking2.png)
+  - This page is for choosing your seat and confirming for the cinema.
+
+
   ![img](./img/booking3.png)
+
+  - This page is for choosing your cinema seats.
+
+
   ![img](./img/booking4.png)
+
+- This page shows the seats, which consist of 72 seats, where you can see which seats are available and which are not.
+
+
+
+
+  ![img](./img/admin.png)
+
+  ## Admin Panel
+
+This page is the **Admin Panel** of the cinema website. It is used by the administrator to manage the system.
+
+### Features
+
+- **Manage Movies**
+  Edit or delete existing movies.
+
+- **Add New Movie**
+  Add a new movie, upload trailers, and set ticket details.
+
+- **Customer Bookings**
+  View all tickets booked by users.
+
+Manage Movie page:
+
+  ![img](./img/update.png)
+
+add new movie page:
+  ![img](./img/add-movie.png)
+
+customer Booking page:
+  ![img](./img/booking-cus.png)
+
+  
+
+
+
+
 
 
 
