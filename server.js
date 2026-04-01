@@ -54,12 +54,6 @@ app.get("/", async (req, res) => {
   } catch (error) {}
 })
 
-app.use("/auth", authRouter)
-
-app.get("/", (req, res) => {
-  res.render("./index.ejs")
-})
-
 app.listen(PORT, () => {
   console.log(`🎬 Mongoose Server is on Port ${PORT}......`)
 })
