@@ -17,10 +17,10 @@ const registerUser = async (req, res) => {
     const emailInDataBase = await User.exists({ email: req.body.email })
 
     if (emailInDataBase) {
-      return res.send("❌ Email is already taken")
+      return res.render("../views/errorPage/taken.ejs")
     }
     if (req.body.password !== req.body.confirmPassword) {
-      return res.send("❌ Password and Confirm Password must match!")
+      return res.render("../views/errorPage/passwordMismatch.ejs")
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 12)
@@ -52,7 +52,7 @@ const signInUser = async (req, res) => {
   try {
     const userInDatabase = await User.findOne({ email: req.body.email })
     if (!userInDatabase) {
-      return res.send("❌ Login failed. Please try again.")
+      return res.render("../views/errorPage/loginFailed.ejs")
     }
 
     const validPassword = await bcrypt.compare(
@@ -60,7 +60,7 @@ const signInUser = async (req, res) => {
       userInDatabase.password
     )
     if (!validPassword) {
-      return res.send("❌ Login failed. Please try again.")
+      return res.render("../views/errorPage/loginFailed.ejs")
     }
     req.session.user = {
       first: userInDatabase.first,
@@ -101,18 +101,23 @@ const updatePassword = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
-      return res.send("❌ No user with that ID exist")
+      return res.render("../views/errorPage/noUser.ejs")
     }
 
     const validPassword = await bcrypt.compare(
       req.body.oldPassword,
       user.password
     )
+
     if (!validPassword) {
-      return res.send("❌ Your old password not correct")
+      return res.render("../views/errorPage/oldPasswordIncorrect.ejs", {
+        userId: req.params.id,
+      })
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
-      return res.send("❌ password not same")
+      return res.render("../views/errorPage/passwordMismatchNew.ejs", {
+        userId: req.params.id,
+      })
     }
     const hashedPassword = await bcrypt.hash(req.body.newPassword, 12)
     user.password = hashedPassword
