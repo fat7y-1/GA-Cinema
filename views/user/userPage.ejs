@@ -162,12 +162,16 @@
                                 <button type="submit" class="btn-dash btn-delete">Cancel Order</button>
                             </form>
                         <% } else { %>
+                             <% if(user.email === "admin@email.com" && item.user){ %>
+                                <a href="/seat/viewSeat/<%= item._id %>" class="btn-dash btn-view">Customer Seats</a>
+                                <%} else{%>
                             <a href="/seat/viewSeat/<%= item._id %>" class="btn-dash btn-view">View My Seats</a>
+                             <%  }%>
 
                             <form action="/seat/seatCancel/<%= item._id %>?_method=DELETE" method="POST">
                                 <button type="submit" class="btn-dash btn-delete">Cancel Booking</button>
                             </form>
-                        <% } %>
+                        <%  }%>
                     </div>
                 </div>
             <% }) %>
