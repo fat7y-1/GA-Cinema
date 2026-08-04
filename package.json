@@ -13,7 +13,7 @@
     "client:dev": "npm run dev --prefix client",
     "client:build": "npm run build --prefix client",
     "dev:all": "concurrently -n api,client -c blue,magenta \"npm run dev\" \"npm run client:dev\"",
-    "build": "npm install --prefix client --include=dev && npm run client:build"
+    "build": "npm install && npm install --prefix client --include=dev && npm run client:build"
   },
   "repository": {
     "type": "git",
