@@ -1,69 +1,83 @@
 const Booking = require("../models/Booking")
 const Movie = require("../models/Movie")
+const { ADMIN_EMAIL } = require("../middleware/index")
 
-const showSeatPage = async (req, res) => {
+const canAccess = (booking, req) =>
+  String(booking.user) === String(req.session.user._id) ||
+  req.session.user.email === ADMIN_EMAIL
+
+const getSeatSelection = async (req, res) => {
   try {
-    const bookedSeat = await Booking.findById(req.params.id).populate("movieId")
-
-    res.render("../views/user/seats.ejs", { bookedSeat })
+    const booking = await Booking.findById(req.params.id).populate("movieId")
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found." })
+    }
+    if (!canAccess(booking, req)) {
+      return res.status(403).json({ message: "Not your booking." })
+    }
+    res.json({ booking })
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "⚠️ Error find the seat page !", error: error.message })
+    res.status(500).json({ message: "⚠️ Error loading seat selection!", error: error.message })
   }
 }
 
-const addSeat = async (req, res) => {
+const saveSeats = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found." })
+    }
+    if (!canAccess(booking, req)) {
+      return res.status(403).json({ message: "Not your booking." })
+    }
+    if (booking.isDone) {
+      return res.status(400).json({ message: "Seats already selected for this booking." })
+    }
 
-    await Movie.findByIdAndUpdate(req.params.movieId, {
-      $push: { seats: { $each: req.body.seats } },
+    const seats = Array.isArray(req.body.seats) ? req.body.seats.map(Number) : []
+    if (seats.length !== booking.userTicket) {
+      return res
+        .status(400)
+        .json({ message: `Please select exactly ${booking.userTicket} seat(s).` })
+    }
+
+    const movie = await Movie.findById(booking.movieId)
+    const alreadyTaken = seats.some((s) => movie.seats.includes(s))
+    if (alreadyTaken) {
+      return res.status(409).json({ message: "One or more selected seats were just taken." })
+    }
+
+    await Movie.findByIdAndUpdate(booking.movieId, {
+      $push: { seats: { $each: seats } },
     })
 
     booking.isDone = true
-    booking.selectedSeats = req.body.seats
+    booking.selectedSeats = seats
     await booking.save()
 
-    res.status(200).json({ message: "Seats updated!" })
+    res.json({ booking })
   } catch (error) {
-    res.status(500).json({ message: "⚠️ Error  !", error: error.message })
+    res.status(500).json({ message: "⚠️ Error saving seats!", error: error.message })
   }
 }
 
-const removeSeat = async (req, res) => {
+const getSeatView = async (req, res) => {
   try {
-    const bookCancel = await Booking.findById(req.params.id)
-
-    await Movie.findByIdAndUpdate(bookCancel.movieId, {
-      $pullAll: { seats: bookCancel.selectedSeats },
-      $inc: { Tickets: bookCancel.userTicket },
-    })
-
-    await Booking.findByIdAndDelete(req.params.id)
-
-    res.redirect("/user/userPage")
+    const booking = await Booking.findById(req.params.id).populate("movieId")
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found." })
+    }
+    if (!canAccess(booking, req)) {
+      return res.status(403).json({ message: "Not your booking." })
+    }
+    res.json({ booking })
   } catch (error) {
-    res.status(500).json({ message: "⚠️ Error  !", error: error.message })
-  }
-}
-
-const showSeatUser = async (req, res) => {
-  try {
-    const bookedSeat = await Booking.findById(req.params.id).populate("movieId")
-
-    res.render("../views/user/saveSeats.ejs", { bookedSeat })
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "⚠️ Error find the seat page !", error: error.message })
+    res.status(500).json({ message: "⚠️ Error loading seats!", error: error.message })
   }
 }
 
 module.exports = {
-  showSeatPage,
-
-  addSeat,
-  removeSeat,
-  showSeatUser,
+  getSeatSelection,
+  saveSeats,
+  getSeatView,
 }

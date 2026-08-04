@@ -1,9 +1,12 @@
 const express = require("express")
 const router = express.Router()
 const seatController = require("../controllers/seatController")
+const { isSignedIn } = require("../middleware/index")
 
-router.get("/seatPage/:id", seatController.showSeatPage)
-router.post("/bookedSeat/:movieId/:id", seatController.addSeat)
-router.delete("/seatCancel/:id", seatController.removeSeat)
-router.get("/viewSeat/:id", seatController.showSeatUser)
+router.use(isSignedIn)
+
+router.get("/:id", seatController.getSeatSelection)
+router.post("/:id", seatController.saveSeats)
+router.get("/:id/view", seatController.getSeatView)
+
 module.exports = router

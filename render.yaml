@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ga-cinema
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: TMDB_API_KEY
+        sync: false

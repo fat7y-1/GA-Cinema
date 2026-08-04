@@ -2,14 +2,12 @@ const express = require("express")
 const router = express.Router()
 
 const middleware = require("../middleware/index")
-const userController = require("../controllers/userController")
+const bookingController = require("../controllers/bookingController")
 
-const { model } = require("mongoose")
+router.use(middleware.isSignedIn)
 
-router.get("/newBooking/:id", userController.showAddBookingPage)
-router.get("/userPage", userController.getAllBooking)
-router.post("/newBook/:id", middleware.isSignedIn, userController.addBook)
-router.delete("/:id", userController.DeleteBook)
-router.get("/movieDescription/:id", userController.showMovieDesc)
+router.get("/", bookingController.getAllBookings)
+router.post("/:movieId", bookingController.addBooking)
+router.delete("/:id", bookingController.deleteBooking)
 
 module.exports = router

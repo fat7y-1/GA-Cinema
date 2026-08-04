@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "Welcome to the Cinema Booking System! This project allows users to explore, book, and manage their movie-watching experience seamlessly. Users can sign in to access the full functionality, including booking tickets for their favorite films. GA Cinema is website show many movies to guests and users , user can booking the tickets fot each movie  ## Features",
   "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "client:dev": "npm run dev --prefix client",
+    "client:build": "npm run build --prefix client",
+    "dev:all": "concurrently -n api,client -c blue,magenta \"npm run dev\" \"npm run client:dev\"",
+    "build": "npm install --prefix client && npm run client:build"
   },
   "repository": {
     "type": "git",
@@ -24,11 +31,12 @@
     "bcrypt": "^6.0.0",
     "connect-mongo": "^6.0.0",
     "dotenv": "^17.3.1",
-    "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
-    "method-override": "^3.0.0",
     "mongoose": "^9.2.4",
     "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }

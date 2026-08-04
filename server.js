@@ -1,7 +1,6 @@
 require("dotenv").config({ quiet: true })
 
 const express = require("express")
-const methodOverride = require("method-override")
 const morgan = require("morgan")
 const session = require("express-session")
 
@@ -12,26 +11,25 @@ const { MongoStore } = require("connect-mongo")
 
 const path = require("path")
 
-// middleware
-const middleware = require("./middleware/index")
 // express library
 const app = express()
 
 //Router
 const authRouter = require("./routes/authRouter")
 const adminRouter = require("./routes/adminRouter")
-const userBooking = require("./routes/userRouter")
+const movieRouter = require("./routes/movieRouter")
+const userRouter = require("./routes/userRouter")
 const seatRouter = require("./routes/seatRouter")
 
-const db = require("./db")
-const Movie = require("./models/Movie")
+require("./db")
 
 const PORT = process.env.PORT ? process.env.PORT : 3000
+const clientDist = path.join(__dirname, "client", "dist")
 
-app.use(express.urlencoded({ extended: false }))
+const isProduction = process.env.NODE_ENV === "production"
+
+app.set("trust proxy", 1)
 app.use(express.json())
-app.use(express.static(path.join(__dirname, "public")))
-app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 app.use(
   session({
@@ -41,20 +39,23 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
     }),
+    cookie: {
+      secure: isProduction,
+      sameSite: "lax",
+    },
   })
 )
-app.use(middleware.passUserToView)
 
-app.use("/auth", authRouter)
-app.use("/admin", adminRouter)
-app.use("/user", userBooking)
-app.use("/seat", seatRouter)
+app.use("/api/auth", authRouter)
+app.use("/api/admin", adminRouter)
+app.use("/api/movies", movieRouter)
+app.use("/api/bookings", userRouter)
+app.use("/api/seats", seatRouter)
 
-app.get("/", async (req, res) => {
-  try {
-    const movies = await Movie.find({})
-    res.render("./index.ejs", { movies })
-  } catch (error) {}
+// Serve the built React app in production
+app.use(express.static(clientDist))
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(clientDist, "index.html"))
 })
 
 app.listen(PORT, () => {

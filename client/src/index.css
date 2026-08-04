@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "@fontsource/bebas-neue";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --color-bg: #0b0b0f;
+  --color-surface: #16161d;
+  --color-surface-2: #1e1e27;
+  --color-line: #2a2a34;
+  --color-gold: #f5c518;
+  --color-gold-dark: #c9a200;
+  --color-crimson: #e4002b;
+  --color-crimson-dark: #a5001f;
+  --color-success: #2ecc71;
+  --color-danger: #ff4d4d;
+
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg text-white font-body antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(245, 197, 24, 0.08), transparent),
+      radial-gradient(ellipse 60% 50% at 100% 0%, rgba(228, 0, 43, 0.06), transparent);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-wide;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-surface/80 backdrop-blur-md border border-white/5;
+  }
+
+  .btn, .btn-gold, .btn-crimson, .btn-outline, .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 font-semibold text-sm tracking-wide transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-gold {
+    @apply bg-gold text-black hover:bg-gold-dark hover:-translate-y-0.5 shadow-[0_8px_24px_-8px_rgba(245,197,24,0.6)];
+  }
+
+  .btn-crimson {
+    @apply bg-crimson text-white hover:bg-crimson-dark hover:-translate-y-0.5 shadow-[0_8px_24px_-8px_rgba(228,0,43,0.6)];
+  }
+
+  .btn-outline {
+    @apply border border-white/20 text-white hover:border-gold hover:text-gold;
+  }
+
+  .btn-ghost {
+    @apply text-white/70 hover:text-white hover:bg-white/5;
+  }
+
+  .field {
+    @apply w-full rounded-md border border-line bg-surface-2 px-4 py-3 text-white placeholder-white/30 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20;
+  }
+
+  .label {
+    @apply block text-xs font-semibold uppercase tracking-wider text-white/50 mb-2;
+  }
+
+  .card {
+    @apply bg-surface border border-white/5 rounded-2xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)];
+  }
+}
