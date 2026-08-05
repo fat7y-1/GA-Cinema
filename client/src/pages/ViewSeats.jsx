@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { api } from "../api/client"
 import SeatMap from "../components/SeatMap"
+import { seatLabel } from "../utils/seat"
 
 export default function ViewSeats() {
   const { id } = useParams()
@@ -38,7 +39,7 @@ export default function ViewSeats() {
                 key={s}
                 className="rounded-full bg-success px-3 py-1 text-sm font-bold text-black"
               >
-                Seat {s + 1}
+                Seat {seatLabel(s)}
               </span>
             ))}
           </div>

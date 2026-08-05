@@ -1,6 +1,4 @@
-const ROWS = 8
-const COLS = 9
-const ROW_LETTERS = "ABCDEFGH"
+import { SEAT_ROWS as ROWS, SEAT_COLS as COLS, SEAT_ROW_LETTERS as ROW_LETTERS } from "../utils/seat"
 
 function seatState(i, { taken, mine, selected }) {
   if (mine?.includes(i)) return "mine"
